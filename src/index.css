@@ -1,0 +1,498 @@
+@import "tailwindcss";
+
+@import "@fontsource/playfair-display";
+
+.font-editorial {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+}
+
+@theme {
+  --font-heading: "GeneralSans", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/GeneralSans-Variable.ttf")
+    format("truetype");
+  font-weight: 200 800;
+  font-style: normal;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --text: #f5f5f5;
+  --muted: #8a8a8a;
+
+  --accent: #7c3aed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* =========================================================================
+   ABOUT & SKILLS — Unified Section
+   ========================================================================= */
+
+/* Section shell */
+.about-skills-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  z-index: 10;
+  margin-top: -100vh; /* Overlaps precisely with the FeaturedProjects extended bottom padding */
+}
+
+/* ---- Unified Canvas wrapper ---- */
+.canvas-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.canvas-wrapper canvas {
+  width: 100% !important;
+  height: 100vh !important;
+}
+
+/* ---- About Text overlay ---- */
+.about-text-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(1.5rem, 6vw, 8rem);
+}
+
+/* ---- Skills Text overlay ---- */
+.skills-text-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(1.5rem, 6vw, 8rem);
+}
+
+/* Section label — top left */
+.about-section-label {
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 3rem);
+  left: clamp(1.5rem, 6vw, 8rem);
+  font-family: 'GeneralSans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #52525b; /* zinc-600 */
+}
+.about-section-label-slash {
+  color: var(--accent);
+}
+
+/* State indicator dots — top right */
+.about-state-indicators {
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 3rem);
+  right: clamp(1.5rem, 6vw, 8rem);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.about-state-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #3f3f46; /* zinc-700 */
+  transition: background 0.4s ease;
+}
+
+/* ---- Statements container ---- */
+.about-statements-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: clamp(1.5rem, 6vw, 8rem);
+  position: relative;
+}
+
+.about-statement {
+  position: absolute;
+  opacity: 0;      /* GSAP controls visibility */
+  will-change: transform, opacity;
+}
+
+.about-statement h3 {
+  font-family: 'GeneralSans', sans-serif;
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  line-height: 0.95;
+  margin: 0;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.about-statement-bold {
+  font-weight: 700 !important;
+}
+
+.about-statement-italic {
+  font-family: 'Playfair Display', serif !important;
+  font-style: italic;
+  font-weight: 400 !important;
+  text-transform: lowercase !important;
+  color: #a1a1aa !important; /* zinc-400 */
+  margin-top: -0.1em;
+}
+
+/* Closing headline — center */
+.about-closing-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.about-closing-mask {
+  overflow: hidden;
+}
+.about-closing-line {
+  font-family: 'GeneralSans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.about-closing-italic {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-style: italic;
+  color: #d4d4d8; /* zinc-300 */
+}
+
+/* Chapter label */
+.skills-chapter-label {
+  position: absolute;
+  top: clamp(3rem, 7vw, 5rem);
+  left: clamp(1.5rem, 6vw, 8rem);
+  font-family: 'GeneralSans', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  color: #a1a1aa;
+}
+
+/* "TOOLS OF the Craft" Title */
+.skills-title-wrap {
+  position: absolute;
+  top: 50%;
+  left: clamp(1.5rem, 6vw, 8rem);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+}
+.skills-title-mask {
+  overflow: hidden;
+}
+.skills-title {
+  font-family: 'GeneralSans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(4rem, 10vw, 12rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.skills-title--italic {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+  color: #a1a1aa; /* zinc-400 */
+  padding-left: 0.2em;
+}
+
+/* Skill Cards */
+.skills-cards-container {
+  position: absolute;
+  bottom: clamp(2.5rem, 10vh, 8rem);
+  right: clamp(1.5rem, 6vw, 8rem);
+  text-align: right;
+}
+
+.skill-card {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+  text-align: right;
+}
+
+.skill-chapter-number {
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #52525b;
+  margin-bottom: 1rem;
+}
+
+.skill-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(3rem, 7vw, 8rem);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 0.75rem 0;
+  padding: 0;
+}
+
+.skill-purpose {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3vw, 2.8rem);
+  color: #71717a;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- Cursor Ripple ---- */
+.cursor-ripple {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(228, 228, 231, 0.3);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+}
+
+/* =========================================================================
+   MOBILE & RESPONSIVE BREAKPOINTS
+   ========================================================================= */
+
+/* ---- Touch devices: smooth scrolling ---- */
+@media (pointer: coarse) {
+  .about-skills-section {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide cursor ripple on touch devices */
+  .cursor-ripple {
+    display: none;
+  }
+}
+
+/* ---- Tablet (max-width: 1024px) ---- */
+@media (max-width: 1024px) {
+  .about-statement h3 {
+    font-size: clamp(2.2rem, 6vw, 5rem);
+  }
+
+  .about-closing-line {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+
+  .skills-title {
+    font-size: clamp(3rem, 8vw, 8rem);
+  }
+
+  .skill-name {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+  }
+
+  .skill-purpose {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+  }
+
+  .skills-cards-container {
+    right: clamp(1rem, 4vw, 4rem);
+    bottom: clamp(2rem, 6vh, 5rem);
+  }
+}
+
+/* ---- Mobile Large (max-width: 768px) ---- */
+@media (max-width: 768px) {
+  .about-skills-section {
+    margin-top: -100vh;
+  }
+
+  .about-text-overlay,
+  .skills-text-overlay {
+    padding: 0 1.25rem;
+  }
+
+  .about-section-label {
+    top: 1.5rem;
+    left: 1.25rem;
+    font-size: 0.55rem;
+  }
+
+  .about-state-indicators {
+    top: 1.5rem;
+    right: 1.25rem;
+  }
+
+  .about-statements-container {
+    padding-left: 0;
+  }
+
+  .about-statement h3 {
+    font-size: clamp(1.8rem, 8vw, 3.5rem);
+  }
+
+  .about-closing-line {
+    font-size: clamp(1.6rem, 7vw, 3rem);
+  }
+
+  .about-closing-wrap {
+    gap: 0.3rem;
+  }
+
+  .skills-chapter-label {
+    top: 2rem;
+    left: 1.25rem;
+    font-size: 0.7rem;
+  }
+
+  .skills-title-wrap {
+    left: 1.25rem;
+  }
+
+  .skills-title {
+    font-size: clamp(2.5rem, 10vw, 5rem);
+  }
+
+  .skills-title--italic {
+    padding-left: 0.1em;
+  }
+
+  .skills-cards-container {
+    right: 1.25rem;
+    bottom: 2rem;
+    max-width: calc(100vw - 2.5rem);
+  }
+
+  .skill-card {
+    max-width: calc(100vw - 2.5rem);
+  }
+
+  .skill-chapter-number {
+    font-size: 0.55rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .skill-name {
+    font-size: clamp(2rem, 10vw, 4rem);
+    margin-bottom: 0.4rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .skill-purpose {
+    font-size: clamp(1rem, 4vw, 1.6rem);
+  }
+}
+
+/* ---- Mobile Small (max-width: 480px) ---- */
+@media (max-width: 480px) {
+  .about-text-overlay,
+  .skills-text-overlay {
+    padding: 0 1rem;
+  }
+
+  .about-section-label {
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+  }
+
+  .about-state-indicators {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .about-state-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .about-statement h3 {
+    font-size: clamp(1.5rem, 9vw, 2.8rem);
+  }
+
+  .about-closing-line {
+    font-size: clamp(1.3rem, 8vw, 2.5rem);
+  }
+
+  .skills-chapter-label {
+    top: 1.5rem;
+    left: 1rem;
+    font-size: 0.65rem;
+  }
+
+  .skills-title-wrap {
+    left: 1rem;
+  }
+
+  .skills-title {
+    font-size: clamp(2rem, 11vw, 4rem);
+    line-height: 0.9;
+  }
+
+  .skills-cards-container {
+    right: 1rem;
+    bottom: 1.5rem;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .skill-card {
+    max-width: calc(100vw - 2rem);
+  }
+
+  .skill-name {
+    font-size: clamp(1.8rem, 11vw, 3rem);
+    margin-bottom: 0.3rem;
+  }
+
+  .skill-purpose {
+    font-size: clamp(0.9rem, 4vw, 1.3rem);
+  }
+}
+
