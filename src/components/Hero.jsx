@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Magnetic from "./Magnetic";
-import resumePDF from "../assets/resume.pdf";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -172,7 +172,7 @@ const Hero = () => {
         >
           <Magnetic>
             <a
-              href={resumePDF}
+              href="public/Resume.pdf"
               download="Soumyadeep_Ghosh_Resume.pdf"
               className="hover:text-white transition-colors"
             >
