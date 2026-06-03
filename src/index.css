@@ -427,6 +427,13 @@ body {
   .skill-purpose {
     font-size: clamp(1rem, 4vw, 1.6rem);
   }
+
+  .contact-heading {
+    font-size: clamp(3rem, 12vw, 6rem) !important;
+  }
+  .contact-subtitle {
+    font-size: 0.65rem !important;
+  }
 }
 
 /* ---- Mobile Small (max-width: 480px) ---- */
@@ -493,6 +500,13 @@ body {
 
   .skill-purpose {
     font-size: clamp(0.9rem, 4vw, 1.3rem);
+  }
+
+  .contact-heading {
+    font-size: clamp(2.5rem, 11vw, 4rem) !important;
+  }
+  .contact-subtitle {
+    font-size: 0.5rem !important;
   }
 }
 

@@ -91,7 +91,9 @@ const P_SINE_START = 0.15;
 const P_GRID_START = 0.22;
 const P_SCATTER_START = 0.30;
 const P_SKILLS_START = 0.33;
-const P_SKILLS_END = 0.95;
+const P_SKILLS_END = 0.85;
+const P_CONTACT_START = 0.88;
+const P_CONTACT_END = 1.0;
 
 const MORPH_DURATION = 0.05; // Duration for Noise -> Sine -> Grid morphs
 
@@ -114,6 +116,15 @@ export default function ParticleExperience({ progress }) {
   const sinePts = useMemo(() => generateSine(PARTICLE_COUNT), []);
   const gridPts = useMemo(() => generateGrid(PARTICLE_COUNT), []);
   const scatterPts = useMemo(() => generateScatter(PARTICLE_COUNT), []);
+  
+  const contactPts = useMemo(() => {
+    return textToPoints("YOUR NEXT PROJECT", PARTICLE_COUNT, {
+      canvasWidth: 1000,
+      canvasHeight: 200,
+      worldWidth: 6.5,
+      depthSpread: 0.05,
+    });
+  }, []);
 
   const textTargets = useMemo(() => {
     return skills.map((skill) =>
@@ -225,13 +236,30 @@ export default function ParticleExperience({ progress }) {
           finalY = textPts[i3 + 1] + (scatterPts[i3 + 1] - textPts[i3 + 1]) * t;
           finalZ = textPts[i3 + 2] + (scatterPts[i3 + 2] - textPts[i3 + 2]) * t;
         }
-      } else {
-        // Final Exit Scatter
-        const exitT = smoothstep((p - P_SKILLS_END) / (1 - P_SKILLS_END));
-        const expand = 1 + exitT * 1.5;
+      } else if (p < P_CONTACT_START) {
+        // Exit Scatter before Contact
+        const exitT = smoothstep((p - P_SKILLS_END) / (P_CONTACT_START - P_SKILLS_END));
+        const expand = 1 + exitT * 0.5;
         finalX = (scatterPts[i3] + driftX) * expand;
         finalY = (scatterPts[i3 + 1] + driftY) * expand;
         finalZ = (scatterPts[i3 + 2] + driftZ) * expand;
+      } else {
+        // Contact Sequence (Morph into YOUR NEXT PROJECT and hold)
+        const contactProgress = (p - P_CONTACT_START) / (P_CONTACT_END - P_CONTACT_START);
+        
+        if (contactProgress < 0.3) {
+          // Morph in
+          const t = smoothstep(contactProgress / 0.3);
+          finalX = scatterPts[i3] + (contactPts[i3] - scatterPts[i3]) * t;
+          finalY = scatterPts[i3 + 1] + (contactPts[i3 + 1] - scatterPts[i3 + 1]) * t;
+          finalZ = scatterPts[i3 + 2] + (contactPts[i3 + 2] - scatterPts[i3 + 2]) * t;
+        } else {
+          // Hold final state
+          const breathe = Math.sin(time * 2 + i * 0.5) * 0.002;
+          finalX = contactPts[i3] + breathe;
+          finalY = contactPts[i3 + 1] + driftY * 0.01;
+          finalZ = contactPts[i3 + 2] + driftZ * 0.03;
+        }
       }
 
       // Initial zoom-in effect during About section intro
@@ -251,16 +279,10 @@ export default function ParticleExperience({ progress }) {
     attrRef.current.needsUpdate = true;
   });
 
-  // Fade out at very end
+  // Fade out at very end (optional, keeping visible for contact)
   useFrame(() => {
     if (!materialRef.current) return;
-    const p = progress.current ?? 0;
-    if (p > P_SKILLS_END) {
-      const fadeOut = 1 - smoothstep((p - P_SKILLS_END) / (1 - P_SKILLS_END));
-      materialRef.current.opacity = 0.85 * fadeOut;
-    } else {
-      materialRef.current.opacity = 0.85;
-    }
+    materialRef.current.opacity = 0.85;
   });
 
   return (

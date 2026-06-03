@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import ParticleExperience from "./ParticleExperience";
+import Contact from "./Contact";
 import skills from "../data/skills";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,11 +38,17 @@ export default function AboutAndSkills() {
       });
       gsap.set(".skills-chapter-label", { opacity: 0, y: 12 });
 
+      // Contact Text
+      gsap.set(".contact-overlay", { autoAlpha: 0 });
+      gsap.set(".contact-line", { yPercent: 110 });
+      gsap.set(".contact-subtitle", { opacity: 0, y: 20 });
+      gsap.set(".contact-link", { opacity: 0, y: 20 });
+
       // -----------------------------------------------------------------------
-      // 2. Pin the unified section for 2000vh
-      //    (600vh for About + 1400vh for Skills)
+      // 2. Pin the unified section for 2500vh
+      //    (600vh About + 1400vh Skills + 500vh Contact)
       // -----------------------------------------------------------------------
-      const totalScroll = "+=2000%";
+      const totalScroll = "+=2500%";
 
       ScrollTrigger.create({
         trigger: sectionRef.current,
@@ -119,7 +126,7 @@ export default function AboutAndSkills() {
 
       // Phase 3: Skill Chapters loop
       const skillStart = 0.33;
-      const skillEnd = 0.95;
+      const skillEnd = 0.85;
       const perSkill = (skillEnd - skillStart) / skills.length;
 
       skills.forEach((skill, i) => {
@@ -151,7 +158,34 @@ export default function AboutAndSkills() {
       });
 
       // Phase 4: Skills Exit
-      masterTl.to(".skills-chapter-label", { opacity: 0, duration: 0.01 }, 0.95);
+      masterTl.to(".skills-chapter-label", { opacity: 0, duration: 0.01 }, 0.85);
+
+      // === CONTACT SEQUENCE (0.88 to 1.0) ===
+      
+      const pContactStart = 0.88;
+      
+      // Fade in contact overlay backdrop
+      masterTl.to(".contact-overlay", { autoAlpha: 1, ease: "power2.inOut", duration: 0.03 }, pContactStart);
+      
+      // Subtitle reveal
+      masterTl.to(".contact-subtitle", { opacity: 1, y: 0, ease: "power3.out", duration: 0.02 }, pContactStart + 0.01);
+      
+      // Main typography staggered reveal
+      masterTl.to(".contact-line", {
+        yPercent: 0,
+        stagger: 0.01,
+        ease: "power4.out",
+        duration: 0.04
+      }, pContactStart + 0.02);
+      
+      // Action links reveal
+      masterTl.to(".contact-link", {
+        opacity: 1,
+        y: 0,
+        stagger: 0.01,
+        ease: "power3.out",
+        duration: 0.03
+      }, pContactStart + 0.05);
 
     },
     { scope: sectionRef }
@@ -252,6 +286,12 @@ export default function AboutAndSkills() {
           ))}
         </div>
       </div>
+      
+      {/* ------------------------------------------------------------------ */}
+      {/* 4. Contact DOM Layer                                                */}
+      {/* ------------------------------------------------------------------ */}
+      <Contact />
+      
     </section>
   );
 }
