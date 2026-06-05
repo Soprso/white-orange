@@ -197,11 +197,12 @@ const Hero = () => {
       ref={containerRef}
       className="
         relative
-        min-h-screen
+        min-h-[100dvh]
         flex
         items-center
         justify-center
         px-6
+        overflow-hidden
       "
     >
       {/* ============================================================= */}
@@ -256,10 +257,12 @@ const Hero = () => {
               font-editorial
               italic
               block
-              text-5xl
+              text-[14vw]
+              sm:text-6xl
               md:text-7xl
               lg:text-[7rem]
               text-zinc-500
+              whitespace-nowrap
             "
           >
             {"Crafting".split("").map((char, index) => (
@@ -276,9 +279,11 @@ const Hero = () => {
               block
               font-black
               uppercase
-              text-6xl
+              text-[11vw]
+              sm:text-6xl
               md:text-8xl
               lg:text-[10rem]
+              whitespace-nowrap
             "
             style={{ perspective: "1000px" }}
           >
