@@ -21,6 +21,7 @@ export const clientProjects = [
       "/projects/client/promptshub/2.png",
       "/projects/client/promptshub/3.png",
       "/projects/client/promptshub/4.png",
+      "/projects/client/promptshub/1.mp4",
     ],
 
     live: "https://promptshub.shop/",
@@ -48,6 +49,7 @@ export const clientProjects = [
       "/projects/client/pokedexplusplus/2.png",
       "/projects/client/pokedexplusplus/3.png",
       "/projects/client/pokedexplusplus/4.png",
+      "/projects/client/pokedexplusplus/1.mp4",
     ],
 
     live: "https://pokedexplus.shop/",
