@@ -42,7 +42,8 @@ export default function AboutAndSkills() {
       gsap.set(".contact-overlay", { autoAlpha: 0 });
       gsap.set(".contact-line", { yPercent: 110 });
       gsap.set(".contact-link", { opacity: 0, y: 20 });
-      gsap.set(".contact-closing", { opacity: 0 });
+      gsap.set(".epilogue-line", { scaleX: 0 });
+      gsap.set(".epilogue-text", { opacity: 0, y: 10 });
 
       // -----------------------------------------------------------------------
       // 2. Pin the unified section for 2500vh
@@ -184,12 +185,19 @@ export default function AboutAndSkills() {
         duration: 0.03
       }, pContactStart + 0.05);
       
-      // Closing copyright
-      masterTl.to(".contact-closing", {
+      // Epilogue reveal (subtle and delayed)
+      masterTl.to(".epilogue-line", {
+        scaleX: 1,
+        ease: "power3.inOut",
+        duration: 0.04
+      }, pContactStart + 0.08)
+      .to(".epilogue-text", {
         opacity: 1,
+        y: 0,
+        stagger: 0.015,
         ease: "power2.out",
-        duration: 0.02
-      }, pContactStart + 0.08);
+        duration: 0.03
+      }, pContactStart + 0.10);
 
     },
     { scope: sectionRef }

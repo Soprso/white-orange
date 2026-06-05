@@ -2,11 +2,15 @@ import Magnetic from "./Magnetic";
 
 const Contact = () => {
   return (
-    <div className="contact-overlay pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center px-6">
-      <div className="contact-content-wrapper pointer-events-auto flex flex-col items-center text-center">
+    <div className="contact-overlay pointer-events-none absolute inset-0 z-20 flex flex-col px-6 py-8">
+      
+      {/* Top Spacer for perfect centering */}
+      <div className="flex-1 min-h-[2rem]"></div>
+
+      <div className="contact-content-wrapper pointer-events-auto flex flex-col items-center text-center shrink-0">
 
         {/* Main Editorial Typography */}
-        <h2 className="contact-heading font-heading font-black text-5xl sm:text-7xl md:text-[8rem] lg:text-[10rem] leading-[0.85] tracking-[-0.04em] uppercase text-white mb-16 flex flex-col items-center">
+        <h2 className="contact-heading font-heading font-black text-5xl sm:text-7xl md:text-[8rem] lg:text-[10rem] leading-[0.85] tracking-[-0.04em] uppercase text-white mb-10 sm:mb-16 flex flex-col items-center">
           <span className="block overflow-hidden pb-2">
             <span className="contact-line block">LET'S BUILD</span>
           </span>
@@ -21,7 +25,7 @@ const Contact = () => {
         </h2>
 
         {/* Action Links */}
-        <div className="contact-links-wrap flex flex-col sm:flex-row items-center gap-8 sm:gap-16">
+        <div className="contact-links-wrap flex flex-col sm:flex-row items-center gap-6 sm:gap-16">
           <div className="overflow-hidden">
             <Magnetic>
               <a
@@ -65,10 +69,26 @@ const Contact = () => {
 
       </div>
 
-      {/* Closing Frame */}
-      <p className="contact-closing absolute bottom-8 left-1/2 -translate-x-1/2 text-[0.6rem] tracking-[0.4em] uppercase text-zinc-700 whitespace-nowrap">
-        © 2025 · Soumyadeep Ghosh
-      </p>
+      {/* Bottom Spacer pushes epilogue down */}
+      <div className="flex-1 min-h-[2rem]"></div>
+
+      {/* The Epilogue */}
+      <div className="epilogue-wrapper w-full px-6 md:px-12 flex flex-col items-center pointer-events-none shrink-0 mt-auto">
+        {/* The Rule */}
+        <div className="epilogue-line w-full max-w-sm h-[1px] bg-zinc-800 mb-6 origin-center"></div>
+        
+        {/* The Closing Phrase */}
+        <p className="epilogue-text text-zinc-500 uppercase tracking-[0.4em] text-[0.65rem] mb-4">
+          Transmission Complete.
+        </p>
+        
+        {/* The Signature */}
+        <div className="epilogue-text flex items-center gap-3 text-zinc-600 text-[0.6rem] tracking-[0.2em] uppercase">
+          <span>Soumyadeep Ghosh</span>
+          <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
+          <span>2026</span>
+        </div>
+      </div>
     </div>
   );
 };
