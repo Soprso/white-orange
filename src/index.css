@@ -226,7 +226,7 @@ body {
 .skills-title {
   font-family: 'GeneralSans', sans-serif;
   font-weight: 700;
-  font-size: clamp(4rem, 10vw, 12rem);
+  font-size: clamp(4rem, 10vw, 10rem);
   line-height: 0.85;
   letter-spacing: -0.04em;
   text-transform: uppercase;
@@ -289,17 +289,7 @@ body {
   padding: 0;
 }
 
-/* ---- Cursor Ripple ---- */
-.cursor-ripple {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid rgba(228, 228, 231, 0.3);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9998;
-}
+
 
 /* =========================================================================
    MOBILE & RESPONSIVE BREAKPOINTS
@@ -310,11 +300,6 @@ body {
   .about-skills-section {
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
-  }
-
-  /* Hide cursor ripple on touch devices */
-  .cursor-ripple {
-    display: none;
   }
 }
 
@@ -428,12 +413,6 @@ body {
     font-size: clamp(1rem, 4vw, 1.6rem);
   }
 
-  .contact-heading {
-    font-size: clamp(3rem, 12vw, 6rem) !important;
-  }
-  .contact-subtitle {
-    font-size: 0.65rem !important;
-  }
 }
 
 /* ---- Mobile Small (max-width: 480px) ---- */
@@ -502,11 +481,5 @@ body {
     font-size: clamp(0.9rem, 4vw, 1.3rem);
   }
 
-  .contact-heading {
-    font-size: clamp(2.5rem, 11vw, 4rem) !important;
-  }
-  .contact-subtitle {
-    font-size: 0.5rem !important;
-  }
 }
 

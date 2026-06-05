@@ -41,8 +41,8 @@ export default function AboutAndSkills() {
       // Contact Text
       gsap.set(".contact-overlay", { autoAlpha: 0 });
       gsap.set(".contact-line", { yPercent: 110 });
-      gsap.set(".contact-subtitle", { opacity: 0, y: 20 });
       gsap.set(".contact-link", { opacity: 0, y: 20 });
+      gsap.set(".contact-closing", { opacity: 0 });
 
       // -----------------------------------------------------------------------
       // 2. Pin the unified section for 2500vh
@@ -164,11 +164,8 @@ export default function AboutAndSkills() {
       
       const pContactStart = 0.88;
       
-      // Fade in contact overlay backdrop
+      // Fade in contact overlay
       masterTl.to(".contact-overlay", { autoAlpha: 1, ease: "power2.inOut", duration: 0.03 }, pContactStart);
-      
-      // Subtitle reveal
-      masterTl.to(".contact-subtitle", { opacity: 1, y: 0, ease: "power3.out", duration: 0.02 }, pContactStart + 0.01);
       
       // Main typography staggered reveal
       masterTl.to(".contact-line", {
@@ -186,6 +183,13 @@ export default function AboutAndSkills() {
         ease: "power3.out",
         duration: 0.03
       }, pContactStart + 0.05);
+      
+      // Closing copyright
+      masterTl.to(".contact-closing", {
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.02
+      }, pContactStart + 0.08);
 
     },
     { scope: sectionRef }

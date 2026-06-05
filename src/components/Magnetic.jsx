@@ -5,6 +5,9 @@ const Magnetic = ({ children, className = "" }) => {
   const ref = useRef(null);
 
   const handleMouseMove = (e) => {
+    // Disable on touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const el = ref.current;
 
     const { left, top, width, height } = el.getBoundingClientRect();
@@ -25,7 +28,7 @@ const Magnetic = ({ children, className = "" }) => {
       x: 0,
       y: 0,
       duration: 0.6,
-      ease: "elastic.out(1,0.3)",
+      ease: "power3.out",
     });
   };
 

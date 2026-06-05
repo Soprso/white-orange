@@ -80,11 +80,14 @@ function smoothstep(t) {
 // Constants
 // ---------------------------------------------------------------------------
 
-const PARTICLE_COUNT = 5000;
+// Halve particle count on mobile devices to maintain 60fps
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+const PARTICLE_COUNT = isMobile ? 2500 : 5000;
 
-// Progress ranges (0.0 to 1.0 mapping to 2000vh total pinned scroll)
-// 0.00 - 0.30 : About Sequence (600vh)
-// 0.30 - 1.00 : Skills Sequence (1400vh)
+// Progress ranges (0.0 to 1.0 mapping to 2500vh total pinned scroll)
+// 0.00 - 0.30 : About Sequence
+// 0.30 - 0.85 : Skills Sequence
+// 0.85 - 1.00 : Contact Sequence
 
 const P_INTRO_END = 0.08;
 const P_SINE_START = 0.15;
@@ -279,11 +282,6 @@ export default function ParticleExperience({ progress }) {
     attrRef.current.needsUpdate = true;
   });
 
-  // Fade out at very end (optional, keeping visible for contact)
-  useFrame(() => {
-    if (!materialRef.current) return;
-    materialRef.current.opacity = 0.85;
-  });
 
   return (
     <group ref={groupRef}>

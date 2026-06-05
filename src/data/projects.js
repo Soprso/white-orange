@@ -1,6 +1,6 @@
 export const clientProjects = [
   {
-    id: 1,
+    id: "01",
     title: "PromptsHub",
     role: "Frontend Developer",
     year: "2025",
@@ -28,7 +28,7 @@ export const clientProjects = [
   },
 
   {
-    id: 2,
+    id: "02",
     title: "Pokedex++",
     role: "Full Stack Developer",
     year: "2025",
@@ -55,7 +55,7 @@ export const clientProjects = [
   },
 
   {
-    id: 3,
+    id: "03",
     title: "O2Need",
     role: "Frontend Developer",
     year: "2024",
@@ -82,7 +82,7 @@ export const clientProjects = [
 
 export const learningProjects = [
   {
-    id: 4,
+    id: "04",
     title: "MediaLibrary",
     role: "Frontend Developer",
     year: "2024",
@@ -107,7 +107,7 @@ export const learningProjects = [
   },
 
   {
-    id: 5,
+    id: "05",
     title: "WeatherForecast",
     role: "Frontend Developer",
     year: "2024",
@@ -132,7 +132,7 @@ export const learningProjects = [
   },
 
   {
-    id: 6,
+    id: "06",
     title: "Peak Performance",
     role: ".NET Full Stack Developer",
     year: "2024",

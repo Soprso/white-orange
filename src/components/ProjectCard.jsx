@@ -252,7 +252,7 @@ const ProjectCard = ({ project, isLast }) => {
           {/* Header Metadata */}
           <div className="flex justify-between items-start mb-6">
             <p className="text-zinc-500 tracking-[0.35em] text-xs uppercase">
-              0{project.id}
+              Section {project.id}
             </p>
             <p className="text-zinc-500 tracking-[0.35em] text-xs uppercase">
               {project.year}
@@ -274,7 +274,8 @@ const ProjectCard = ({ project, isLast }) => {
           >
             <img
               src={project.images[currentImage]}
-              alt={project.title}
+              alt={`${project.title} - view ${currentImage + 1}`}
+              loading="lazy"
               className="w-full h-full object-cover object-center"
             />
           </div>
