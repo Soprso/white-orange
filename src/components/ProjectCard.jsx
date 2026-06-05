@@ -6,14 +6,10 @@ import Magnetic from "./Magnetic";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ProjectCard = ({ project, isLast }) => {
+const ProjectCard = ({ project }) => {
   const cardRef = useRef(null);
-  const innerRef = useRef(null);
-  const overlayRef = useRef(null);
   const imageRef = useRef(null);
   const titleRef = useRef(null);
-  const bgTextRef = useRef(null);
-
   const [currentImage, setCurrentImage] = useState(0);
 
   // Slideshow
@@ -27,148 +23,7 @@ const ProjectCard = ({ project, isLast }) => {
     return () => clearInterval(interval);
   }, [project]);
 
-  useGSAP(
-    () => {
-      // 1. Entrance: Image clip-path reveal
-      gsap.fromTo(
-        imageRef.current,
-        { clipPath: "inset(10% 10% 10% 10%)" },
-        {
-          clipPath: "inset(0% 0% 0% 0%)",
-          ease: "none",
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: "top 90%",
-            end: "top 30%",
-            scrub: 1,
-          },
-        }
-      );
-
-      // 2. Entrance: Title and info reveal
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      tl.from(titleRef.current, {
-        yPercent: 110,
-        duration: 1,
-        ease: "power4.out",
-      });
-
-      const pills = cardRef.current.querySelectorAll(".tech-pill");
-      if (pills.length) {
-        tl.from(
-          pills,
-          {
-            y: 20,
-            opacity: 0,
-            stagger: 0.05,
-            duration: 0.5,
-            ease: "power3.out",
-          },
-          "-=0.6"
-        );
-      }
-
-      // 3. Parallax: Oversized Background Text
-      gsap.fromTo(
-        bgTextRef.current,
-        { yPercent: 20 },
-        {
-          yPercent: -20,
-          ease: "none",
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        }
-      );
-
-      // 4. Stacking: Scale down and darken as next card covers this one
-      if (!isLast) {
-        gsap.fromTo(
-          innerRef.current,
-          { scale: 1 },
-          {
-            scale: 0.95,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-
-        gsap.fromTo(
-          overlayRef.current,
-          { opacity: 0 },
-          {
-            opacity: 0.6,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-      } else {
-        // 5. Last Card Transition: Recede and fade text to reveal About section
-        gsap.fromTo(
-          innerRef.current,
-          { scale: 1 },
-          {
-            scale: 0.95,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-
-        gsap.fromTo(
-          overlayRef.current,
-          { opacity: 0 },
-          {
-            opacity: 0.5,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-
-        gsap.to(bgTextRef.current, {
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      }
-    },
-    { scope: cardRef }
-  );
-
+  // Image fade in/out for slideshow
   useGSAP(
     () => {
       if (!imageRef.current) return;
@@ -194,169 +49,133 @@ const ProjectCard = ({ project, isLast }) => {
     <article
       ref={cardRef}
       className="
-        sticky
-        top-0
-        h-screen
-        w-full
+        relative
+        flex-shrink-0
+        w-[85vw]
+        max-w-[1100px]
+        h-[80vh]
+        mr-12
+        last:mr-24
+        bg-[#0a0a0a]
+        rounded-[32px]
+        overflow-hidden
+        border
+        border-zinc-800
         flex
-        items-center
-        justify-center
-        py-8
+        flex-col
+        p-6
+        md:p-10
       "
     >
+      {/* Header Metadata */}
+      <div className="flex justify-between items-start mb-6 shrink-0">
+        <p className="text-zinc-500 tracking-[0.35em] text-xs uppercase">
+          Section {project.id}
+        </p>
+        <p className="text-zinc-500 tracking-[0.35em] text-xs uppercase">
+          {project.year}
+        </p>
+      </div>
+
+      {/* Screenshot (Landscape Framing) */}
       <div
-        ref={innerRef}
+        ref={imageRef}
         className="
+          w-full 
+          aspect-video
+          overflow-hidden 
+          rounded-2xl
+          bg-zinc-900/30
+          mb-8
           relative
-          w-full
-          h-full
-          max-w-7xl
-          mx-auto
-          bg-[#0a0a0a]
-          rounded-[32px]
-          overflow-hidden
-          border
-          border-zinc-800
-          flex
-          flex-col
+          flex items-center justify-center
+          shrink-0
         "
       >
-        {/* Overlay for depth stacking */}
-        <div
-          ref={overlayRef}
-          className="absolute inset-0 bg-black z-50 pointer-events-none opacity-0"
+        <img
+          src={project.images[currentImage]}
+          alt={`${project.title} - view ${currentImage + 1}`}
+          loading="lazy"
+          className="w-full h-full object-contain"
         />
+      </div>
 
-        {/* Oversized Background Typography */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
-          <span
-            ref={bgTextRef}
+      {/* Footer Info Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4 md:gap-8 items-end mt-auto overflow-y-auto">
+        {/* Title */}
+        <div>
+          <h3
             className="
-              font-heading 
-              font-black 
-              uppercase 
-              whitespace-nowrap 
-              text-zinc-100 
-              opacity-[0.04] 
-              tracking-tighter
-              text-[25vw]
-              md:text-[18vw]
+              font-heading
+              text-4xl
+              sm:text-5xl
+              md:text-6xl
+              xl:text-7xl
+              leading-[0.85]
+              tracking-[-0.05em]
+              uppercase
             "
           >
-            {project.title}
-          </span>
+            <span className="block overflow-hidden pb-2">
+              <span ref={titleRef} className="block">
+                {project.title}
+              </span>
+            </span>
+          </h3>
         </div>
 
-        {/* Content Wrapper */}
-        <div className="relative z-10 flex flex-col h-full p-6 md:p-10">
-          {/* Header Metadata */}
-          <div className="flex justify-between items-start mb-6">
-            <p className="text-zinc-500 tracking-[0.35em] text-xs uppercase">
-              Section {project.id}
-            </p>
-            <p className="text-zinc-500 tracking-[0.35em] text-xs uppercase">
-              {project.year}
-            </p>
-          </div>
+        {/* Details */}
+        <div className="flex flex-col items-start lg:items-end text-left lg:text-right">
+          <p className="text-zinc-400 text-xs md:text-sm leading-relaxed max-w-sm mb-6">
+            {project.description}
+          </p>
 
-          {/* Screenshot */}
-          <div
-            ref={imageRef}
-            className="
-              flex-1 
-              w-full 
-              overflow-hidden 
-              rounded-2xl
-              bg-zinc-900/50
-              mb-8
-              relative
-            "
-          >
-            <img
-              src={project.images[currentImage]}
-              alt={`${project.title} - view ${currentImage + 1}`}
-              loading="lazy"
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-
-          {/* Footer Info Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-end">
-            {/* Title */}
-            <div>
-              <h3
+          <div className="flex flex-wrap gap-2 lg:justify-end mb-6">
+            {project.stack.map((tech) => (
+              <span
+                key={tech}
                 className="
-                  font-heading
-                  text-5xl
-                  sm:text-6xl
-                  md:text-7xl
-                  xl:text-[5.5rem]
-                  leading-[0.85]
-                  tracking-[-0.05em]
-                  uppercase
+                  tech-pill
+                  px-3
+                  py-1
+                  border
+                  border-zinc-800
+                  rounded-full
+                  text-[10px]
+                  md:text-xs
+                  text-zinc-500
                 "
               >
-                <span className="block overflow-hidden pb-2">
-                  <span ref={titleRef} className="block">
-                    {project.title}
-                  </span>
-                </span>
-              </h3>
-            </div>
+                {tech}
+              </span>
+            ))}
+          </div>
 
-            {/* Details */}
-            <div className="flex flex-col items-start lg:items-end text-left lg:text-right">
-              <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-sm mb-6">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 lg:justify-end mb-6">
-                {project.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="
-                      tech-pill
-                      px-3
-                      py-1
-                      border
-                      border-zinc-800
-                      rounded-full
-                      text-xs
-                      text-zinc-500
-                    "
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-6">
-                {project.live && (
-                  <Magnetic>
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-zinc-400 hover:text-white transition-colors text-sm uppercase tracking-widest"
-                    >
-                      Visit Site ↗
-                    </a>
-                  </Magnetic>
-                )}
-                {project.github && (
-                  <Magnetic>
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-zinc-400 hover:text-white transition-colors text-sm uppercase tracking-widest"
-                    >
-                      GitHub ↗
-                    </a>
-                  </Magnetic>
-                )}
-              </div>
-            </div>
+          <div className="flex gap-6">
+            {project.live && (
+              <Magnetic>
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-400 hover:text-white transition-colors text-xs md:text-sm uppercase tracking-widest"
+                >
+                  Visit Site ↗
+                </a>
+              </Magnetic>
+            )}
+            {project.github && (
+              <Magnetic>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-400 hover:text-white transition-colors text-xs md:text-sm uppercase tracking-widest"
+                >
+                  GitHub ↗
+                </a>
+              </Magnetic>
+            )}
           </div>
         </div>
       </div>
